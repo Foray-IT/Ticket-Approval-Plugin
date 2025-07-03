@@ -5,7 +5,7 @@ class PluginValidationautoConfig extends CommonDBTM {
     static protected $notable = true;
     
     static function getTypeName($nb = 0) {
-        return __('Aprovação Automatica por email', 'validationauto');
+        return __('Automatic Ticket Validation', 'validationauto');
     }
     
     static function canCreate() {
@@ -34,9 +34,9 @@ class PluginValidationautoConfig extends CommonDBTM {
 
         echo "<form method='post' action='" . Toolbox::getItemTypeFormURL(__CLASS__) . "'>";
         echo "<table class='tab_cadre_fixe'>";
-        echo "<tr><th colspan='2'>" . __('Configurações de Aprovação Automatica por email') . "</th></tr>";
+        echo "<tr><th colspan='2'>" . __('Automatic Approval Settings') . "</th></tr>";
 
-        // Lista palavras-chave existentes
+        // List existing keywords
         $result = $DB->request([
             'FROM' => 'glpi_plugin_validationauto_keywords',
             'ORDER' => 'keyword'
@@ -45,15 +45,15 @@ class PluginValidationautoConfig extends CommonDBTM {
         foreach ($result as $data) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>" . $data['keyword'] . "</td>";
-            echo "<td>" . ($data['is_active'] ? __('Sim') : __('Não')) . "</td>";
+            echo "<td>" . ($data['is_active'] ? __('Yes') : __('No')) . "</td>";
             echo "</tr>";
         }
 
         echo "<tr class='tab_bg_2'>";
         echo "<td colspan='2' class='center'>";
-        echo "<input type='text' name='new_keyword' placeholder='" . __('Nova palavra-chave') . "'>";
+        echo "<input type='text' name='new_keyword' placeholder='" . __('New Keyword') . "'>";
         echo "&nbsp;";
-        echo "<input type='submit' name='add' value='" . __('Adicionar') . "' class='submit'>";
+        echo "<input type='submit' name='add' value='" . __('Add') . "' class='submit'>";
         echo "</td>";
         echo "</tr>";
 
