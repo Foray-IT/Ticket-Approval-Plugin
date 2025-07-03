@@ -1,7 +1,7 @@
 <?php
 class PluginValidationauto extends Plugin {
     public function getTypeName($nb = 0) {
-        return 'Aprovação Automatica por email';
+        return 'Automatic Ticket Validation';
     }
     
     public static function canCreate() {
@@ -13,7 +13,7 @@ class PluginValidationauto extends Plugin {
     }
     
     public static function getMenuName() {
-        return __('Aprovação Automatica por email');
+        return __('Automatic Ticket Validation');
     }
     
     private function showConfigForm() {
@@ -22,18 +22,18 @@ class PluginValidationauto extends Plugin {
         echo "<form name='form' method='post' action=''>";
         echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
         
-        // Tabela de palavras-chave de aprovação
+        // Displays the table of keywords
         echo "<div class='center' id='tabsbody'>";
         echo "<table class='tab_cadre_fixe'>";
-        echo "<tr><th colspan='4'>" . __('Palavras-chave de Aprovação') . "</th></tr>";
+        echo "<tr><th colspan='4'>" . __('Keywords for Approval') . "</th></tr>";
         echo "<tr>
-                <th>" . __('Palavra-chave') . "</th>
-                <th>" . __('Tipo') . "</th>
+                <th>" . __('Keyword') . "</th>
+                <th>" . __('Action') . "</th>
                 <th>" . __('Status') . "</th>
-                <th>" . __('Ações') . "</th>
+                <th>" . __('Occurences') . "</th>
               </tr>";
         
-        // Listar palavras-chave existentes
+        // Lists existing keywords
         $result = $DB->request([
             'FROM' => 'glpi_plugin_validationauto_keywords',
             'ORDER' => ['type', 'keyword']
@@ -42,31 +42,31 @@ class PluginValidationauto extends Plugin {
         foreach ($result as $data) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>" . $data['keyword'] . "</td>";
-            echo "<td>" . ($data['type'] == 'approval' ? __('Aprovação') : __('Negação')) . "</td>";
-            echo "<td>" . ($data['is_active'] ? __('Ativo') : __('Inativo')) . "</td>";
+            echo "<td>" . ($data['type'] == 'approval' ? __('Approval') : __('Rejection')) . "</td>";
+            echo "<td>" . ($data['is_active'] ? __('Active') : __('Inactive')) . "</td>";
             echo "<td class='center'>";
             
-            // Botão para ativar/desativar
+            // Button for changing status
             echo "<button type='submit' name='toggle_status' value='" . $data['id'] . "' class='submit'>" .
-                 ($data['is_active'] ? __('Desativar') : __('Ativar')) . "</button> ";
+                 ($data['is_active'] ? __('Disable') : __('Enable')) . "</button> ";
             
-            // Botão para excluir
+            // Button for deleting
             echo "<button type='submit' name='delete' value='" . $data['id'] . "' class='submit' 
-                  onclick='return confirm(\"" . __('Tem certeza que deseja excluir esta palavra-chave?') . "\")'>" .
-                 __('Excluir') . "</button>";
+                  onclick='return confirm(\"" . __('Are you sure you want to delete this keyword?') . "\")'>" .
+                 __('Delete') . "</button>";
             
             echo "</td>";
             echo "</tr>";
         }
         
-        // Campos para adicionar nova palavra-chave
+        // Fields to add new keywords
         echo "<tr class='tab_bg_2'>";
-        echo "<td><input type='text' name='new_keyword' placeholder='" . __('Nova palavra-chave') . "'></td>";
+        echo "<td><input type='text' name='new_keyword' placeholder='" . __('New Keyword') . "'></td>";
         echo "<td><select name='keyword_type'>
-                <option value='approval'>" . __('Aprovação') . "</option>
-                <option value='denial'>" . __('Negação') . "</option>
+                <option value='approval'>" . __('Approval') . "</option>
+                <option value='denial'>" . __('Rejection') . "</option>
               </select></td>";
-        echo "<td colspan='2'><input type='submit' name='add' value='" . __('Adicionar') . "' class='submit'></td>";
+        echo "<td colspan='2'><input type='submit' name='add' value='" . __('Add') . "' class='submit'></td>";
         echo "</tr>";
         
         echo "</table>";
@@ -131,7 +131,7 @@ class PluginValidationauto extends Plugin {
             'id' => '1',
             'table' => 'glpi_plugin_validationauto_keywords',
             'field' => 'keyword',
-            'name' => __('Palavra-chave'),
+            'name' => __('Keyword'),
             'datatype' => 'text'
         ];
         
@@ -139,7 +139,7 @@ class PluginValidationauto extends Plugin {
             'id' => '2',
             'table' => 'glpi_plugin_validationauto_keywords',
             'field' => 'type',
-            'name' => __('Tipo'),
+            'name' => __('Action'),
             'datatype' => 'specific'
         ];
         
@@ -147,7 +147,7 @@ class PluginValidationauto extends Plugin {
             'id' => '3',
             'table' => 'glpi_plugin_validationauto_keywords',
             'field' => 'is_active',
-            'name' => __('Ativo'),
+            'name' => __('Active'),
             'datatype' => 'bool'
         ];
         
