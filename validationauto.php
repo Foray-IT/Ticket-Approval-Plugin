@@ -42,7 +42,7 @@ class PluginValidationauto extends Plugin {
         foreach ($result as $data) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>" . $data['keyword'] . "</td>";
-            echo "<td>" . ($data['type'] == 'approval' ? __('Approve') : __('Reject')) . "</td>";
+            echo "<td>" . ($data['type'] == 'approve' ? __('Approve') : __('Reject')) . "</td>";
             echo "<td>" . ($data['is_active'] ? __('Active') : __('Inactive')) . "</td>";
             echo "<td class='center'>";
             
