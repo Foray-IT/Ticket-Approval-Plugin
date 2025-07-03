@@ -42,7 +42,7 @@ class PluginValidationauto extends Plugin {
         foreach ($result as $data) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>" . $data['keyword'] . "</td>";
-            echo "<td>" . ($data['type'] == 'approval' ? __('Approval') : __('Rejection')) . "</td>";
+            echo "<td>" . ($data['type'] == 'approval' ? __('Approve') : __('Reject')) . "</td>";
             echo "<td>" . ($data['is_active'] ? __('Active') : __('Inactive')) . "</td>";
             echo "<td class='center'>";
             
@@ -63,8 +63,8 @@ class PluginValidationauto extends Plugin {
         echo "<tr class='tab_bg_2'>";
         echo "<td><input type='text' name='new_keyword' placeholder='" . __('New Keyword') . "'></td>";
         echo "<td><select name='keyword_type'>
-                <option value='approval'>" . __('Approval') . "</option>
-                <option value='denial'>" . __('Rejection') . "</option>
+                <option value='approval'>" . __('Approve') . "</option>
+                <option value='denial'>" . __('Reject') . "</option>
               </select></td>";
         echo "<td colspan='2'><input type='submit' name='add' value='" . __('Add') . "' class='submit'></td>";
         echo "</tr>";
