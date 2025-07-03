@@ -78,7 +78,7 @@ if (count($result) > 0) {
     foreach ($result as $data) {
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . $data['keyword'] . "</td>";
-        echo "<td>" . ($data['type'] == 'approval' ? __('Approved') : __('Rejected')) . "</td>";
+        echo "<td>" . ($data['type'] == 'approval' ? __('Approve') : __('Reject')) . "</td>";
         echo "<td>" . ($data['is_active'] ? __('Active') : __('Inactive')) . "</td>";
         echo "<td class='center'>";
         
@@ -109,8 +109,8 @@ echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
 echo "<input type='text' name='new_keyword' placeholder='" . __('New Keyword') . "'>";
 echo "&nbsp;";
 echo "<select name='keyword_type'>";
-echo "<option value='approval'>" . __('Approval') . "</option>";
-echo "<option value='denial'>" . __('Rejection') . "</option>";
+echo "<option value='approval'>" . __('Approve') . "</option>";
+echo "<option value='denial'>" . __('Reject') . "</option>";
 echo "</select>";
 echo "&nbsp;";
 echo "<input type='submit' name='add_keyword' value='" . __('Add') . "' class='submit'>";
