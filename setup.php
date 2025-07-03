@@ -1,7 +1,7 @@
 <?php
 use Glpi\Plugin\Hooks;
 
-define('PLUGIN_VALIDATIONAUTO_VERSION', '1.0.1');
+define('PLUGIN_VALIDATIONAUTO_VERSION', '1.0.2');
 
 function plugin_init_validationauto() {
     global $PLUGIN_HOOKS;
