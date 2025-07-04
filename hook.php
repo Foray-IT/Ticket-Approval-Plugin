@@ -14,14 +14,14 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
     $denial_keywords = [];
     
     // Finds approval keywords
-    $query = "SELECT keyword FROM glpi_plugin_validationauto_keywords WHERE is_active = 1 AND type = 'approval'";
+    $query = "SELECT keyword FROM glpi_plugin_validationauto_keywords WHERE is_active = 1 AND type = 'approve'";
     $result = $DB->query($query);
     while ($row = $DB->fetchAssoc($result)) {
         $keywords[] = strtolower($row['keyword']);
     }
     
     // Finds rejection keywords
-    $query = "SELECT keyword FROM glpi_plugin_validationauto_keywords WHERE is_active = 1 AND type = 'denial'";
+    $query = "SELECT keyword FROM glpi_plugin_validationauto_keywords WHERE is_active = 1 AND type = 'reject'";
     $result = $DB->query($query);
     while ($row = $DB->fetchAssoc($result)) {
         $denial_keywords[] = strtolower($row['keyword']);
@@ -77,8 +77,8 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
             'status' => $is_approval ? CommonITILValidation::ACCEPTED : CommonITILValidation::REFUSED,
             'validation_date' => $_SESSION["glpi_currenttime"],
             'comment_validation' => $is_approval ? 
-                'Aprovado automaticamente via e-mail.' : 
-                'Negado automaticamente via e-mail.'
+                'Approved.' : 
+                'Rejected.'
         ];
         
         // Forces the status update
@@ -89,7 +89,7 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
             Toolbox::logInFile(
                 'validation_auto', 
                 sprintf(
-                    'Falha ao atualizar validação ID %d do ticket %d. Status desejado: %d', 
+                    'Failed to update validation ID %d for ticket %d. Desired status: %d', 
                     $validation['id'], 
                     $ticket_id, 
                     $is_approval ? CommonITILValidation::ACCEPTED : CommonITILValidation::REFUSED
@@ -116,7 +116,7 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
         $input = [
             'items_id' => $ticket_id,
             'itemtype' => 'Ticket',
-            'content' => __('Validação negada via e-mail.')
+            'content' => __('Validation rejected.')
         ];
         $followup->add($input);
     }
@@ -129,7 +129,7 @@ function plugin_validationauto_install() {
     $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_validationauto_keywords` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `keyword` varchar(255) NOT NULL,
-        `type` enum('approval','denial') NOT NULL DEFAULT 'approval',
+        `type` enum('approve','reject') NOT NULL DEFAULT 'approve',
         `is_active` tinyint(1) NOT NULL DEFAULT '1',
         `date_creation` datetime DEFAULT NULL,
         `date_mod` datetime DEFAULT NULL,
@@ -143,12 +143,12 @@ function plugin_validationauto_install() {
     $queries = [
         "INSERT INTO `glpi_plugin_validationauto_keywords` 
          (keyword, type, is_active, date_creation) 
-         VALUES ('aprovado', 'approval', 1, NOW())
+         VALUES ('yes', 'approve', 1, NOW())
          ON DUPLICATE KEY UPDATE is_active = 1",
         
         "INSERT INTO `glpi_plugin_validationauto_keywords` 
          (keyword, type, is_active, date_creation) 
-         VALUES ('negado', 'denial', 1, NOW())
+         VALUES ('no', 'reject', 1, NOW())
          ON DUPLICATE KEY UPDATE is_active = 1"
     ];
     
