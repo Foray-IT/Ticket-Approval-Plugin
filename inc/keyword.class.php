@@ -13,7 +13,7 @@ class PluginValidationautoKeyword extends CommonDBTM {
     }
 
     public static function getTypeName($nb = 0) {
-        return _n('Approval Keyword', 'Approval Keywords', $nb);
+        return _n('Keyword/Phrase', 'Keywords/Phrases', $nb);
     }
 
     function showForm($ID, array $options = []) {
@@ -23,7 +23,7 @@ class PluginValidationautoKeyword extends CommonDBTM {
         $this->showFormHeader($options);
 
         echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Keyword') . "</td>";
+        echo "<td>" . __('Keyword/Phrase') . "</td>";
         echo "<td>";
         echo Html::input('keyword', ['value' => $this->fields['keyword']]);
         echo "</td>";
@@ -50,7 +50,7 @@ class PluginValidationautoKeyword extends CommonDBTM {
 
     function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
         if ($item->getType() == __CLASS__) {
-            return __('Keyword');
+            return __('Keyword/Phrase');
         }
         return '';
     }

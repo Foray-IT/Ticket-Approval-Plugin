@@ -1,25 +1,25 @@
 <?php
 use Glpi\Plugin\Hooks;
 
-define('PLUGIN_VALIDATIONAUTO_VERSION', '1.0.3');
+define('PLUGIN_VALIDATIONAUTO_VERSION', '1.0.4');
 
 function plugin_init_validationauto() {
     global $PLUGIN_HOOKS;
     
-    // Necessary for Security.
+    // Necessary for Security
     $PLUGIN_HOOKS[Hooks::CSRF_COMPLIANT]['validationauto'] = true;
     
     if (Session::haveRight('config', UPDATE)) {
-        // Adds the settings menu.
+        // Adds the settings menu
         $PLUGIN_HOOKS['config_page']['validationauto'] = 'front/config.php';
         
-        // Adds the menu to GLPI.
+        // Adds the menu to GLPI
         $PLUGIN_HOOKS['menu_toadd']['validationauto'] = [
             'config' => 'PluginValidationautoConfig'
         ];
     }
     
-    // Registers the hook for processing followups. 
+    // Registers the hook for processing followups
     $PLUGIN_HOOKS['item_add']['validationauto'] = [
         'ITILFollowup' => 'plugin_validationauto_process_followup'
     ];
@@ -29,7 +29,7 @@ function plugin_version_validationauto() {
     return [
         'name'           => 'Automatic Ticket Validation',
         'version'        => PLUGIN_VALIDATIONAUTO_VERSION,
-        'author'         => 'Adriano Marinho, English Translation by Jay',
+        'author'         => 'Adriano Marinho, Jay (English Translation)',
         'license'        => 'GLPv3+',
         'homepage'       => 'https://github.com/Foray-IT/Ticket-Approval-Plugin/',
         'requirements'   => [

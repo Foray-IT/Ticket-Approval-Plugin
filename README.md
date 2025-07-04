@@ -1,7 +1,7 @@
 # Automatic Ticket Validation Plugin for GLPI
 
-Analyzes ticket comments for specific keywords allowing for automatic approval or rejctions of pending validations.
-Supports custom keyword configuration via a menu interface.
+Analyzes ticket comments for specific keywords/phrases allowing for automatic approval or rejctions of pending validations.
+Supports custom keyword/phrase configuration via a menu interface.
 
 
 ### Requirements & Compatibility

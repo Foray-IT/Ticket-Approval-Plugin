@@ -15,9 +15,9 @@ if (isset($_POST['add']) && isset($_POST['new_keyword'])) {
 }
 
 // Displays the form
-Html::header("Validation Keywords", $_SERVER['PHP_SELF'], "config", "plugins");
+Html::header("Validation Keywords/Phrases", $_SERVER['PHP_SELF'], "config", "plugins");
 echo "<div class='center'>";
-echo "<h2>" . __("Manage Validation Keywords") . "</h2>";
+echo "<h2>" . __("Manage Keywords/Phrases") . "</h2>";
 
 $plugin->showConfigForm();
 

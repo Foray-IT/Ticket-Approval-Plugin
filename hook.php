@@ -14,14 +14,14 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
     $denial_keywords = [];
     
     // Finds approval keywords
-    $query = "SELECT keyword FROM glpi_plugin_validationauto_keywords WHERE is_active = 1 AND type = 'approve'";
+    $query = "SELECT keyword FROM glpi_plugin_validationauto_keywords WHERE is_active = 1 AND type = 'approval'";
     $result = $DB->query($query);
     while ($row = $DB->fetchAssoc($result)) {
         $keywords[] = strtolower($row['keyword']);
     }
     
     // Finds rejection keywords
-    $query = "SELECT keyword FROM glpi_plugin_validationauto_keywords WHERE is_active = 1 AND type = 'reject'";
+    $query = "SELECT keyword FROM glpi_plugin_validationauto_keywords WHERE is_active = 1 AND type = 'denial'";
     $result = $DB->query($query);
     while ($row = $DB->fetchAssoc($result)) {
         $denial_keywords[] = strtolower($row['keyword']);
@@ -129,7 +129,7 @@ function plugin_validationauto_install() {
     $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_validationauto_keywords` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `keyword` varchar(255) NOT NULL,
-        `type` enum('approve','reject') NOT NULL DEFAULT 'approve',
+        `type` enum('approval','denial') NOT NULL DEFAULT 'approval',
         `is_active` tinyint(1) NOT NULL DEFAULT '1',
         `date_creation` datetime DEFAULT NULL,
         `date_mod` datetime DEFAULT NULL,
@@ -143,12 +143,12 @@ function plugin_validationauto_install() {
     $queries = [
         "INSERT INTO `glpi_plugin_validationauto_keywords` 
          (keyword, type, is_active, date_creation) 
-         VALUES ('approve', 'approve', 1, NOW())
+         VALUES ('uh huh', 'approval', 1, NOW())
          ON DUPLICATE KEY UPDATE is_active = 1",
         
         "INSERT INTO `glpi_plugin_validationauto_keywords` 
          (keyword, type, is_active, date_creation) 
-         VALUES ('reject', 'reject', 1, NOW())
+         VALUES ('nuh uh', 'denial', 1, NOW())
          ON DUPLICATE KEY UPDATE is_active = 1"
     ];
     
