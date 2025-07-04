@@ -77,8 +77,8 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
             'status' => $is_approval ? CommonITILValidation::ACCEPTED : CommonITILValidation::REFUSED,
             'validation_date' => $_SESSION["glpi_currenttime"],
             'comment_validation' => $is_approval ? 
-                'Aprovado automaticamente via e-mail.' : 
-                'Negado automaticamente via e-mail.'
+                'Approved.' : 
+                'Rejected.'
         ];
         
         // Forces the status update
@@ -89,7 +89,7 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
             Toolbox::logInFile(
                 'validation_auto', 
                 sprintf(
-                    'Falha ao atualizar validação ID %d do ticket %d. Status desejado: %d', 
+                    'Failed to update validation ID %d for ticket %d. Desired status: %d', 
                     $validation['id'], 
                     $ticket_id, 
                     $is_approval ? CommonITILValidation::ACCEPTED : CommonITILValidation::REFUSED
@@ -116,7 +116,7 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
         $input = [
             'items_id' => $ticket_id,
             'itemtype' => 'Ticket',
-            'content' => __('Validação negada via e-mail.')
+            'content' => __('Validation rejected.')
         ];
         $followup->add($input);
     }
@@ -143,12 +143,12 @@ function plugin_validationauto_install() {
     $queries = [
         "INSERT INTO `glpi_plugin_validationauto_keywords` 
          (keyword, type, is_active, date_creation) 
-         VALUES ('aprovado', 'approval', 1, NOW())
+         VALUES ('uh huh', 'approval', 1, NOW())
          ON DUPLICATE KEY UPDATE is_active = 1",
         
         "INSERT INTO `glpi_plugin_validationauto_keywords` 
          (keyword, type, is_active, date_creation) 
-         VALUES ('negado', 'denial', 1, NOW())
+         VALUES ('nuh uh', 'denial', 1, NOW())
          ON DUPLICATE KEY UPDATE is_active = 1"
     ];
     

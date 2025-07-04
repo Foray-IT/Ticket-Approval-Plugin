@@ -64,7 +64,7 @@ echo "<tr>";
 echo "<th>" . __('Keyword') . "</th>";
 echo "<th>" . __('Action') . "</th>";
 echo "<th>" . __('Status') . "</th>";
-echo "<th>" . __('Other') . "</th>";
+echo "<th>" . __('') . "</th>";
 echo "</tr>";
 
 // Lists existing keywords
