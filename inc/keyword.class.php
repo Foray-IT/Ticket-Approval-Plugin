@@ -13,7 +13,7 @@ class PluginValidationautoKeyword extends CommonDBTM {
     }
 
     public static function getTypeName($nb = 0) {
-        return _n('Palavra-chave de Validação', 'Palavras-chave de Validação', $nb);
+        return _n('Approval Keyword', 'Approval Keywords', $nb);
     }
 
     function showForm($ID, array $options = []) {
@@ -23,14 +23,14 @@ class PluginValidationautoKeyword extends CommonDBTM {
         $this->showFormHeader($options);
 
         echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Palavra-chave') . "</td>";
+        echo "<td>" . __('Keyword') . "</td>";
         echo "<td>";
         echo Html::input('keyword', ['value' => $this->fields['keyword']]);
         echo "</td>";
         echo "</tr>";
 
         echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Ativo') . "</td>";
+        echo "<td>" . __('Active') . "</td>";
         echo "<td>";
         Dropdown::showYesNo('is_active', $this->fields['is_active']);
         echo "</td>";
@@ -50,7 +50,7 @@ class PluginValidationautoKeyword extends CommonDBTM {
 
     function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
         if ($item->getType() == __CLASS__) {
-            return __('Palavra-chave');
+            return __('Keyword');
         }
         return '';
     }
