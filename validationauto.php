@@ -22,7 +22,7 @@ class PluginValidationauto extends Plugin {
         echo "<form name='form' method='post' action=''>";
         echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
         
-        // Tabela de palavras-chave de aprovação
+        // Displays the table of keywords
         echo "<div class='center' id='tabsbody'>";
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr><th colspan='4'>" . __('Palavras-chave de Aprovação') . "</th></tr>";
@@ -33,7 +33,7 @@ class PluginValidationauto extends Plugin {
                 <th>" . __('Ações') . "</th>
               </tr>";
         
-        // Listar palavras-chave existentes
+        // Lists existing keywords
         $result = $DB->request([
             'FROM' => 'glpi_plugin_validationauto_keywords',
             'ORDER' => ['type', 'keyword']
@@ -46,11 +46,11 @@ class PluginValidationauto extends Plugin {
             echo "<td>" . ($data['is_active'] ? __('Ativo') : __('Inativo')) . "</td>";
             echo "<td class='center'>";
             
-            // Botão para ativar/desativar
+            // Button for changing status
             echo "<button type='submit' name='toggle_status' value='" . $data['id'] . "' class='submit'>" .
                  ($data['is_active'] ? __('Desativar') : __('Ativar')) . "</button> ";
             
-            // Botão para excluir
+            // Button for deleting
             echo "<button type='submit' name='delete' value='" . $data['id'] . "' class='submit' 
                   onclick='return confirm(\"" . __('Tem certeza que deseja excluir esta palavra-chave?') . "\")'>" .
                  __('Excluir') . "</button>";
@@ -59,7 +59,7 @@ class PluginValidationauto extends Plugin {
             echo "</tr>";
         }
         
-        // Campos para adicionar nova palavra-chave
+        // Fields to add new keywords
         echo "<tr class='tab_bg_2'>";
         echo "<td><input type='text' name='new_keyword' placeholder='" . __('Nova palavra-chave') . "'></td>";
         echo "<td><select name='keyword_type'>

@@ -3,7 +3,7 @@ include ("../../../inc/includes.php");
 Session::checkRight("config", UPDATE);
 Html::header('Aprovação Automatica por email', $_SERVER['PHP_SELF'], 'config', 'plugins');
 
-// Processar ações do formulário
+// Process form actions
 if (isset($_POST['add_keyword'])) {
     global $DB;
     
@@ -21,7 +21,7 @@ if (isset($_POST['add_keyword'])) {
     Html::back();
 }
 
-// Processar toggle de status
+// Process status toggles
 if (isset($_POST['toggle_status'])) {
     global $DB;
     $id = $_POST['toggle_status'];
@@ -44,7 +44,7 @@ if (isset($_POST['toggle_status'])) {
     Html::back();
 }
 
-// Processar exclusão
+// Process deletions
 if (isset($_POST['delete'])) {
     global $DB;
     $DB->delete(
@@ -59,7 +59,7 @@ echo "<div class='center'>";
 echo "<table class='tab_cadre_fixe'>";
 echo "<tr><th colspan='4'>" . __('Configuração de Aprovação Automatica por email') . "</th></tr>";
 
-// Cabeçalho da tabela
+// Table Header
 echo "<tr>";
 echo "<th>" . __('Palavra-chave') . "</th>";
 echo "<th>" . __('Tipo') . "</th>";
@@ -67,7 +67,7 @@ echo "<th>" . __('Status') . "</th>";
 echo "<th>" . __('Ações') . "</th>";
 echo "</tr>";
 
-// Listagem das palavras-chave existentes
+// Lists existing keywords
 global $DB;
 $result = $DB->request([
     'FROM' => 'glpi_plugin_validationauto_keywords',
@@ -82,15 +82,15 @@ if (count($result) > 0) {
         echo "<td>" . ($data['is_active'] ? __('Ativo') : __('Inativo')) . "</td>";
         echo "<td class='center'>";
         
-        // Formulário para ações
+        // Form for actions
         echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . "' style='display:inline;'>";
         echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
         
-        // Botão ativar/desativar
+        // Button for toggling status
         echo "<button type='submit' name='toggle_status' value='" . $data['id'] . "' class='submit'>" .
              ($data['is_active'] ? __('Desativar') : __('Ativar')) . "</button> ";
         
-        // Botão excluir
+        // Button for deletion
         echo "<button type='submit' name='delete' value='" . $data['id'] . "' class='submit' 
               onclick='return confirm(\"" . __('Tem certeza que deseja excluir esta palavra-chave?') . "\")'>" .
              __('Excluir') . "</button>";
@@ -101,7 +101,7 @@ if (count($result) > 0) {
     }
 }
 
-// Formulário para adicionar nova palavra-chave
+// Form to add new keyword
 echo "<tr class='tab_bg_2'>";
 echo "<td colspan='4' class='center'>";
 echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . "'>";

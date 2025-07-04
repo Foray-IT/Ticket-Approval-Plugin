@@ -36,7 +36,7 @@ class PluginValidationautoConfig extends CommonDBTM {
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr><th colspan='2'>" . __('Configurações de Aprovação Automatica por email') . "</th></tr>";
 
-        // Lista palavras-chave existentes
+        // List existing keywords
         $result = $DB->request([
             'FROM' => 'glpi_plugin_validationauto_keywords',
             'ORDER' => 'keyword'

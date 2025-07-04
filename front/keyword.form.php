@@ -8,13 +8,13 @@ Html::header('Aprovação Automatica por email', $_SERVER['PHP_SELF'], 'config',
 
 $plugin = new PluginValidationauto();
 
-// Processar o formulário se foi enviado
+// Process the form when submitted
 if (isset($_POST['add']) && isset($_POST['new_keyword'])) {
     $plugin->processConfigForm();
     Html::back();
 }
 
-// Exibir o formulário
+// Displays the form
 Html::header("Palavras-chave de Validação", $_SERVER['PHP_SELF'], "config", "plugins");
 echo "<div class='center'>";
 echo "<h2>" . __("Gerenciar Palavras-chave de Aprovação") . "</h2>";
