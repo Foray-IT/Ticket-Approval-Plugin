@@ -27,7 +27,7 @@ function plugin_init_validationauto() {
 
 function plugin_version_validationauto() {
     return [
-        'name'           => 'Aprovação Automatica por email',
+        'name'           => 'Automatic Ticket Validation',
         'version'        => PLUGIN_VALIDATIONAUTO_VERSION,
         'author'         => 'Adriano Marinho, Jay (English Translation)',
         'license'        => 'GLPv3+',
@@ -55,7 +55,7 @@ function plugin_validationauto_check_prerequisites() {
 
 function plugin_validationauto_check_config($verbose = false) {
     if ($verbose) {
-        echo 'Configuração OK';
+        echo 'Settings OK';
     }
     return true;
 }
