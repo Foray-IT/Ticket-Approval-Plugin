@@ -25,12 +25,11 @@ class PluginValidationauto extends Plugin {
         // Displays the table of keywords
         echo "<div class='center' id='tabsbody'>";
         echo "<table class='tab_cadre_fixe'>";
-        echo "<tr><th colspan='4'>" . __('Validation Keywords') . "</th></tr>";
+        echo "<tr><th colspan='3'>" . __('Validation Keywords') . "</th></tr>";
         echo "<tr>
                 <th>" . __('Keyword') . "</th>
                 <th>" . __('Action') . "</th>
                 <th>" . __('Status') . "</th>
-                <th>" . __('Other') . "</th>
               </tr>";
         
         // Lists existing keywords

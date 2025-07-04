@@ -57,14 +57,13 @@ if (isset($_POST['delete'])) {
 // Interface
 echo "<div class='center'>";
 echo "<table class='tab_cadre_fixe'>";
-echo "<tr><th colspan='4'>" . __('Automatic Ticket Validation Settings') . "</th></tr>";
+echo "<tr><th colspan='3'>" . __('Automatic Ticket Validation Settings') . "</th></tr>";
 
 // Table Header
 echo "<tr>";
 echo "<th>" . __('Keyword') . "</th>";
 echo "<th>" . __('Action') . "</th>";
 echo "<th>" . __('Status') . "</th>";
-echo "<th>" . __('') . "</th>";
 echo "</tr>";
 
 // Lists existing keywords
@@ -103,7 +102,7 @@ if (count($result) > 0) {
 
 // Form to add new keyword
 echo "<tr class='tab_bg_2'>";
-echo "<td colspan='4' class='center'>";
+echo "<td colspan='3' class='center'>";
 echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . "'>";
 echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
 echo "<input type='text' name='new_keyword' placeholder='" . __('New Keyword') . "'>";
