@@ -9,26 +9,31 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
     $ticket_id = $followup->getField('items_id');
     $content = strtolower($followup->getField('content'));
     
+    // Buscar palavras-chave ativas
     $keywords = [];
     $denial_keywords = [];
     
+    // Buscar palavras de aprovação
     $query = "SELECT keyword FROM glpi_plugin_validationauto_keywords WHERE is_active = 1 AND type = 'approval'";
     $result = $DB->query($query);
     while ($row = $DB->fetchAssoc($result)) {
         $keywords[] = strtolower($row['keyword']);
     }
     
+    // Buscar palavras de negação
     $query = "SELECT keyword FROM glpi_plugin_validationauto_keywords WHERE is_active = 1 AND type = 'denial'";
     $result = $DB->query($query);
     while ($row = $DB->fetchAssoc($result)) {
         $denial_keywords[] = strtolower($row['keyword']);
     }
     
+    // Inicializa variáveis para armazenar a primeira ocorrência
     $first_approval_pos = PHP_INT_MAX;
     $first_denial_pos = PHP_INT_MAX;
     $found_approval = false;
     $found_denial = false;
     
+    // Encontra a primeira ocorrência de cada tipo de palavra
     foreach ($keywords as $keyword) {
         $pos = strpos($content, $keyword);
         if ($pos !== false && $pos < $first_approval_pos) {
@@ -45,10 +50,12 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
         }
     }
     
+    // Se não encontrou nenhuma palavra-chave, retorna
     if (!$found_approval && !$found_denial) {
         return;
     }
     
+    // Determina a ação baseado na primeira palavra encontrada
     $is_approval = false;
     if ($found_approval && $found_denial) {
         $is_approval = ($first_approval_pos < $first_denial_pos);
@@ -56,12 +63,14 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
         $is_approval = $found_approval;
     }
     
+    // Buscar validações pendentes do ticket
     $ticket_validation = new TicketValidation();
     $pending_validations = $ticket_validation->find([
         'tickets_id' => $ticket_id,
         'status' => CommonITILValidation::WAITING
     ]);
     
+    // Atualizar status das validações pendentes
     foreach ($pending_validations as $validation) {
         $input = [
             'id' => $validation['id'],
@@ -72,8 +81,10 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
                 'Negado automaticamente via e-mail.'
         ];
         
+        // Força atualização do status
         $result = $ticket_validation->update($input);
         
+        // Se a atualização falhar, registre no log
         if (!$result) {
             Toolbox::logInFile(
                 'validation_auto', 
@@ -86,6 +97,7 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
             );
         }
         
+        // Atualiza o ticket também
         $ticket = new Ticket();
         if ($ticket->getFromDB($ticket_id)) {
             $ticket_update = [
@@ -98,6 +110,7 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
         }
     }
     
+    // Se for uma negação, adiciona um comentário explicativo
     if (!$is_approval) {
         $followup = new ITILFollowup();
         $input = [
@@ -112,6 +125,7 @@ function plugin_validationauto_process_followup(ITILFollowup $followup) {
 function plugin_validationauto_install() {
     global $DB;
     
+    // Criar tabela para armazenar palavras-chave
     $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_validationauto_keywords` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `keyword` varchar(255) NOT NULL,
@@ -125,6 +139,7 @@ function plugin_validationauto_install() {
     
     $DB->query($query);
     
+    // Inserir palavras-chave padrão
     $queries = [
         "INSERT INTO `glpi_plugin_validationauto_keywords` 
          (keyword, type, is_active, date_creation) 
@@ -144,8 +159,8 @@ function plugin_validationauto_install() {
     return true;
 }
 
-// Drops (deletes) the database table on plugin uninstall
 function plugin_validationauto_uninstall() {
     global $DB;
     $DB->query("DROP TABLE IF EXISTS `glpi_plugin_validationauto_keywords`");
     return true;
+}

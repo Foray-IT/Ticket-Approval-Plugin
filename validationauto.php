@@ -22,6 +22,7 @@ class PluginValidationauto extends Plugin {
         echo "<form name='form' method='post' action=''>";
         echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
         
+        // Tabela de palavras-chave de aprovação
         echo "<div class='center' id='tabsbody'>";
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr><th colspan='4'>" . __('Palavras-chave de Aprovação') . "</th></tr>";
@@ -32,6 +33,7 @@ class PluginValidationauto extends Plugin {
                 <th>" . __('Ações') . "</th>
               </tr>";
         
+        // Listar palavras-chave existentes
         $result = $DB->request([
             'FROM' => 'glpi_plugin_validationauto_keywords',
             'ORDER' => ['type', 'keyword']
@@ -57,6 +59,7 @@ class PluginValidationauto extends Plugin {
             echo "</tr>";
         }
         
+        // Campos para adicionar nova palavra-chave
         echo "<tr class='tab_bg_2'>";
         echo "<td><input type='text' name='new_keyword' placeholder='" . __('Nova palavra-chave') . "'></td>";
         echo "<td><select name='keyword_type'>
