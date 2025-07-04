@@ -25,7 +25,7 @@ class PluginValidationauto extends Plugin {
         // Displays the table of keywords
         echo "<div class='center' id='tabsbody'>";
         echo "<table class='tab_cadre_fixe'>";
-        echo "<tr><th colspan='3'>" . __('Validation Keywords') . "</th></tr>";
+        echo "<tr><th colspan='3'>" . __('Validation Keywords/Phrases') . "</th></tr>";
         echo "<tr>
                 <th>" . __('Keyword') . "</th>
                 <th>" . __('Action') . "</th>
@@ -51,7 +51,7 @@ class PluginValidationauto extends Plugin {
             
             // Button for deleting
             echo "<button type='submit' name='delete' value='" . $data['id'] . "' class='submit' 
-                  onclick='return confirm(\"" . __('Are you sure you want to delete this keyword?') . "\")'>" .
+                  onclick='return confirm(\"" . __('Are you sure you want to delete this keyword/phrase?') . "\")'>" .
                  __('Delete') . "</button>";
             
             echo "</td>";
@@ -60,7 +60,7 @@ class PluginValidationauto extends Plugin {
         
         // Fields to add new keywords
         echo "<tr class='tab_bg_2'>";
-        echo "<td><input type='text' name='new_keyword' placeholder='" . __('New Keyword') . "'></td>";
+        echo "<td><input type='text' name='new_keyword' placeholder='" . __('New Keyword/Phrase') . "'></td>";
         echo "<td><select name='keyword_type'>
                 <option value='approval'>" . __('Approve') . "</option>
                 <option value='denial'>" . __('Reject') . "</option>
@@ -130,7 +130,7 @@ class PluginValidationauto extends Plugin {
             'id' => '1',
             'table' => 'glpi_plugin_validationauto_keywords',
             'field' => 'keyword',
-            'name' => __('Keyword'),
+            'name' => __('Keyword/Phrase'),
             'datatype' => 'text'
         ];
         

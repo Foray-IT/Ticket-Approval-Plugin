@@ -61,7 +61,7 @@ echo "<tr><th colspan='3'>" . __('Automatic Ticket Validation Settings') . "</th
 
 // Table Header
 echo "<tr>";
-echo "<th>" . __('Keyword') . "</th>";
+echo "<th>" . __('Keyword/Phrase') . "</th>";
 echo "<th>" . __('Action') . "</th>";
 echo "<th>" . __('Status') . "</th>";
 echo "</tr>";
@@ -91,7 +91,7 @@ if (count($result) > 0) {
         
         // Button for deletion
         echo "<button type='submit' name='delete' value='" . $data['id'] . "' class='submit' 
-              onclick='return confirm(\"" . __('Are you sure you want to delete this keyword?') . "\")'>" .
+              onclick='return confirm(\"" . __('Are you sure you want to delete this keyword/phrase?') . "\")'>" .
              __('Delete') . "</button>";
         
         echo "</form>";
@@ -105,7 +105,7 @@ echo "<tr class='tab_bg_2'>";
 echo "<td colspan='3' class='center'>";
 echo "<form method='post' action='" . $_SERVER['PHP_SELF'] . "'>";
 echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
-echo "<input type='text' name='new_keyword' placeholder='" . __('New Keyword') . "'>";
+echo "<input type='text' name='new_keyword' placeholder='" . __('New Keyword/Phrase') . "'>";
 echo "&nbsp;";
 echo "<select name='keyword_type'>";
 echo "<option value='approval'>" . __('Approve') . "</option>";

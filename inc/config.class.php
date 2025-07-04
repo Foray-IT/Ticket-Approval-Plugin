@@ -51,7 +51,7 @@ class PluginValidationautoConfig extends CommonDBTM {
 
         echo "<tr class='tab_bg_2'>";
         echo "<td colspan='2' class='center'>";
-        echo "<input type='text' name='new_keyword' placeholder='" . __('New Keyword') . "'>";
+        echo "<input type='text' name='new_keyword' placeholder='" . __('New Keyword/Phrase') . "'>";
         echo "&nbsp;";
         echo "<input type='submit' name='add' value='" . __('Add') . "' class='submit'>";
         echo "</td>";
