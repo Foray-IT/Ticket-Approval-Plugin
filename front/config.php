@@ -1,7 +1,7 @@
 <?php
 include ("../../../inc/includes.php");
 Session::checkRight("config", UPDATE);
-Html::header('Aprovação Automatica por email', $_SERVER['PHP_SELF'], 'config', 'plugins');
+Html::header('Automatic Ticket Validation', $_SERVER['PHP_SELF'], 'config', 'plugins');
 
 // Process form actions
 if (isset($_POST['add_keyword'])) {
@@ -57,14 +57,14 @@ if (isset($_POST['delete'])) {
 // Interface
 echo "<div class='center'>";
 echo "<table class='tab_cadre_fixe'>";
-echo "<tr><th colspan='4'>" . __('Configuração de Aprovação Automatica por email') . "</th></tr>";
+echo "<tr><th colspan='4'>" . __('Automatic Ticket Validation Settings') . "</th></tr>";
 
 // Table Header
 echo "<tr>";
-echo "<th>" . __('Palavra-chave') . "</th>";
-echo "<th>" . __('Tipo') . "</th>";
+echo "<th>" . __('Keyword') . "</th>";
+echo "<th>" . __('Action') . "</th>";
 echo "<th>" . __('Status') . "</th>";
-echo "<th>" . __('Ações') . "</th>";
+echo "<th>" . __('Other') . "</th>";
 echo "</tr>";
 
 // Lists existing keywords
