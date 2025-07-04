@@ -1,7 +1,7 @@
 <?php
 class PluginValidationauto extends Plugin {
     public function getTypeName($nb = 0) {
-        return 'Automatic Ticket Validation';
+        return 'Aprovação Automatica por email';
     }
     
     public static function canCreate() {
@@ -13,7 +13,7 @@ class PluginValidationauto extends Plugin {
     }
     
     public static function getMenuName() {
-        return __('Automatic Ticket Validation');
+        return __('Aprovação Automatica por email');
     }
     
     private function showConfigForm() {
@@ -22,18 +22,16 @@ class PluginValidationauto extends Plugin {
         echo "<form name='form' method='post' action=''>";
         echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
         
-        // Displays the table of keywords
         echo "<div class='center' id='tabsbody'>";
         echo "<table class='tab_cadre_fixe'>";
-        echo "<tr><th colspan='4'>" . __('Keywords for Approval') . "</th></tr>";
+        echo "<tr><th colspan='4'>" . __('Palavras-chave de Aprovação') . "</th></tr>";
         echo "<tr>
-                <th>" . __('Keyword') . "</th>
-                <th>" . __('Action') . "</th>
+                <th>" . __('Palavra-chave') . "</th>
+                <th>" . __('Tipo') . "</th>
                 <th>" . __('Status') . "</th>
-                <th>" . __('Occurences') . "</th>
+                <th>" . __('Ações') . "</th>
               </tr>";
         
-        // Lists existing keywords
         $result = $DB->request([
             'FROM' => 'glpi_plugin_validationauto_keywords',
             'ORDER' => ['type', 'keyword']
@@ -42,31 +40,30 @@ class PluginValidationauto extends Plugin {
         foreach ($result as $data) {
             echo "<tr class='tab_bg_1'>";
             echo "<td>" . $data['keyword'] . "</td>";
-            echo "<td>" . ($data['type'] == 'approve' ? __('Approve') : __('Reject')) . "</td>";
-            echo "<td>" . ($data['is_active'] ? __('Active') : __('Inactive')) . "</td>";
+            echo "<td>" . ($data['type'] == 'approval' ? __('Aprovação') : __('Negação')) . "</td>";
+            echo "<td>" . ($data['is_active'] ? __('Ativo') : __('Inativo')) . "</td>";
             echo "<td class='center'>";
             
-            // Button for changing status
+            // Botão para ativar/desativar
             echo "<button type='submit' name='toggle_status' value='" . $data['id'] . "' class='submit'>" .
-                 ($data['is_active'] ? __('Disable') : __('Enable')) . "</button> ";
+                 ($data['is_active'] ? __('Desativar') : __('Ativar')) . "</button> ";
             
-            // Button for deleting
+            // Botão para excluir
             echo "<button type='submit' name='delete' value='" . $data['id'] . "' class='submit' 
-                  onclick='return confirm(\"" . __('Are you sure you want to delete this keyword?') . "\")'>" .
-                 __('Delete') . "</button>";
+                  onclick='return confirm(\"" . __('Tem certeza que deseja excluir esta palavra-chave?') . "\")'>" .
+                 __('Excluir') . "</button>";
             
             echo "</td>";
             echo "</tr>";
         }
         
-        // Fields to add new keywords
         echo "<tr class='tab_bg_2'>";
-        echo "<td><input type='text' name='new_keyword' placeholder='" . __('New Keyword') . "'></td>";
+        echo "<td><input type='text' name='new_keyword' placeholder='" . __('Nova palavra-chave') . "'></td>";
         echo "<td><select name='keyword_type'>
-                <option value='approval'>" . __('Approve') . "</option>
-                <option value='denial'>" . __('Reject') . "</option>
+                <option value='approval'>" . __('Aprovação') . "</option>
+                <option value='denial'>" . __('Negação') . "</option>
               </select></td>";
-        echo "<td colspan='2'><input type='submit' name='add' value='" . __('Add') . "' class='submit'></td>";
+        echo "<td colspan='2'><input type='submit' name='add' value='" . __('Adicionar') . "' class='submit'></td>";
         echo "</tr>";
         
         echo "</table>";
@@ -131,7 +128,7 @@ class PluginValidationauto extends Plugin {
             'id' => '1',
             'table' => 'glpi_plugin_validationauto_keywords',
             'field' => 'keyword',
-            'name' => __('Keyword'),
+            'name' => __('Palavra-chave'),
             'datatype' => 'text'
         ];
         
@@ -139,7 +136,7 @@ class PluginValidationauto extends Plugin {
             'id' => '2',
             'table' => 'glpi_plugin_validationauto_keywords',
             'field' => 'type',
-            'name' => __('Action'),
+            'name' => __('Tipo'),
             'datatype' => 'specific'
         ];
         
@@ -147,7 +144,7 @@ class PluginValidationauto extends Plugin {
             'id' => '3',
             'table' => 'glpi_plugin_validationauto_keywords',
             'field' => 'is_active',
-            'name' => __('Active'),
+            'name' => __('Ativo'),
             'datatype' => 'bool'
         ];
         
