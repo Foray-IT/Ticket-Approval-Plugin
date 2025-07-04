@@ -78,8 +78,8 @@ if (count($result) > 0) {
     foreach ($result as $data) {
         echo "<tr class='tab_bg_1'>";
         echo "<td>" . $data['keyword'] . "</td>";
-        echo "<td>" . ($data['type'] == 'approval' ? __('Aprovação') : __('Negação')) . "</td>";
-        echo "<td>" . ($data['is_active'] ? __('Ativo') : __('Inativo')) . "</td>";
+        echo "<td>" . ($data['type'] == 'approval' ? __('Approve') : __('Reject')) . "</td>";
+        echo "<td>" . ($data['is_active'] ? __('Active') : __('Inactive')) . "</td>";
         echo "<td class='center'>";
         
         // Form for actions
@@ -88,12 +88,12 @@ if (count($result) > 0) {
         
         // Button for toggling status
         echo "<button type='submit' name='toggle_status' value='" . $data['id'] . "' class='submit'>" .
-             ($data['is_active'] ? __('Desativar') : __('Ativar')) . "</button> ";
+             ($data['is_active'] ? __('Disable') : __('Enable')) . "</button> ";
         
         // Button for deletion
         echo "<button type='submit' name='delete' value='" . $data['id'] . "' class='submit' 
-              onclick='return confirm(\"" . __('Tem certeza que deseja excluir esta palavra-chave?') . "\")'>" .
-             __('Excluir') . "</button>";
+              onclick='return confirm(\"" . __('Are you sure you want to delete this keyword?') . "\")'>" .
+             __('Delete') . "</button>";
         
         echo "</form>";
         echo "</td>";
