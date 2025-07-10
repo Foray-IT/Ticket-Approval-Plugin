@@ -1,7 +1,7 @@
 <?php
 use Glpi\Plugin\Hooks;
 
-define('PLUGIN_VALIDATIONAUTO_VERSION', '1.0.4');
+define('PLUGIN_VALIDATIONAUTO_VERSION', '1.0.5');
 
 function plugin_init_validationauto() {
     global $PLUGIN_HOOKS;
@@ -30,7 +30,7 @@ function plugin_version_validationauto() {
         'name'           => 'Automatic Ticket Validation',
         'version'        => PLUGIN_VALIDATIONAUTO_VERSION,
         'author'         => 'Adriano Marinho, Jay (English Translation)',
-        'license'        => 'GLPv3+',
+        'license'        => 'GPL v3+',
         'homepage'       => 'https://github.com/Foray-IT/Ticket-Approval-Plugin/',
         'requirements'   => [
             'glpi' => [
